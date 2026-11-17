@@ -60,8 +60,7 @@ def mst_from_points(points):
       a list of edges of the form (weight, node1, node2) indicating the minimum spanning
       tree connecting the cities in the input.
     """
-    ###TODO
-    pass
+    
     graph = {}
     for point in points[:]:
         for other_point in points:
