@@ -1,3 +1,7 @@
+"""
+Name: Chuong Hoang Pham
+"""
+
 from collections import defaultdict
 from heapq import heappush, heappop 
 from math import sqrt
@@ -31,13 +35,17 @@ def prim(graph):
                 return prim_helper(visited, frontier, tree)
         
     # pick first node as source arbitrarily
-    source = list(graph.keys())[0]
-    frontier = []
-    heappush(frontier, (0, source, source))
-    visited = set()  # store the visited nodes (don't need distance anymore)
-    tree = set()
-    prim_helper(visited, frontier, tree)
-    return tree
+    res = list()
+    nodes = set(graph.keys())
+    while len(nodes) > 0:
+        source = list(nodes)[0]
+        frontier = []
+        heappush(frontier, (0, source, source))
+        visited = set()  # store the visited nodes (don't need distance anymore)
+        tree = set()
+        res.append(prim_helper(visited, frontier, tree))
+        nodes = nodes - visited
+    return res
 
 def mst_from_points(points):
     """
@@ -54,6 +62,15 @@ def mst_from_points(points):
     """
     ###TODO
     pass
+    graph = {}
+    for point in points[:]:
+        for other_point in points:
+            if other_point != point:
+                graph.setdefault(point[0], []).append((other_point[0], euclidean_distance(point, other_point)))
+            # graph[point] = [(euclidean_distance(point, other_point))]
+    print(graph)
+    print(prim(graph))
+    return prim(graph)[0]
 
 def euclidean_distance(p1, p2):
     return sqrt((p1[1] - p2[1])**2 + (p1[2] - p2[2])**2)
